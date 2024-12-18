@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Github Sample</string>
+    // top app bar
+    <string name="dsp_btn_back">Navigate Up</string>
+    <string name="dsp_btn_profile">Profile</string>
+    <string name="dsp_btn_search">Search</string>
+
+    // page name
+    <string name="page_name_trend">Trend</string>
+    <string name="page_name_search">Search </string>
+    <string name="page_name_profile">Profile</string>
+    <string name="page_name_login">Log in</string>
+    <string name="page_name_repo">Repo</string>
+    // repo detail
+
+    // login
+    <string name="btn_log_in">Log in</string>
+
+    // profile
+    <string name="btn_log_out">Log out</string>
+
+    // user repo
+    <string name="loading">Loading…</string>
+    <string name="no_repo">No Repo Found.</string>
+    <string name="dsp_btn_repo_list_item">repo list </string>
+</resources>
