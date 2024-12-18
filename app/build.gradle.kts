@@ -63,6 +63,9 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.chunker)
 
+    testImplementation(libs.square.mockwebserver)
+    testImplementation(libs.mockito.kotlin)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
