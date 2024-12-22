@@ -39,7 +39,7 @@ fun IssueListItemView(param: IssueListItemParam) {
             contentDescription = dspStr
         }
     ) {
-        Column {
+        Column(Modifier.padding(8.dp)) {
             Text(param.title
                 , style = MaterialTheme.typography.titleMedium)
             if (param.body != null) {

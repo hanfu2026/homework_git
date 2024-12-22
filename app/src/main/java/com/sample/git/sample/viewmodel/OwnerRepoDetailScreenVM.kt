@@ -85,6 +85,7 @@ class OwnerRepoDetailScreenVM : ViewModel() {
                         Log.d("GS", "ret = $ret")
                     } else {
                         onError("Error : repo issue null")
+                        onErrMsg(errorMessage.value ?: "")
                     }
                 } else {
                     Log.d("GS", "error: ${response.code()}")

@@ -78,6 +78,7 @@ fun SearchScreen(loginViewModel: LoginVM, topBarViewModel: TopAppBarVM, navContr
                     item {NoDataFoundView()}
                 } else {
                     items(it.size) { index ->
+                        Spacer(Modifier.height(16.dp))
                         it[index]?.let { repo ->
                             RepoListItem(RepoListItemParam(
                                 index = index,

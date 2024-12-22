@@ -2,7 +2,6 @@ package com.sample.git.sample
 
 
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -29,11 +28,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -85,7 +83,9 @@ class MainActivity : ComponentActivity() {
                             , navigationIcon = {
                                 val destination = navBackStackEntry?.destination?.route
                                 if (destination != ScreenRouteFeed.javaClass.name) {
-                                    IconButton(onClick = { navController.navigateUp() }) {
+                                    IconButton(
+                                        modifier = Modifier.testTag("navigateUpButton"),
+                                        onClick = { navController.navigateUp() }) {
                                         Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.dsp_btn_back))
                                     }
                                 } else {
@@ -96,12 +96,15 @@ class MainActivity : ComponentActivity() {
 
                                 }
                             }, actions = {
-                                IconButton(onClick = {
+                                IconButton(
+                                    modifier = Modifier.testTag("searchButton"),
+                                    onClick = {
                                     navToSearch(navController)
                                 }) {
                                     Icon(imageVector = Icons.Default.Search, contentDescription = stringResource(R.string.dsp_btn_search))
                                 }
-                                IconButton(onClick = {
+                                IconButton(modifier = Modifier.testTag("profileButton"),
+                                    onClick = {
                                     navToProfile(navController)
                                 }) {
                                     if (loginStatus == LoginStatus.LOGIN) {
@@ -184,7 +187,7 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun NavigationComponent(navController: NavHostController) {
+    fun NavigationComponent(navController: NavHostController) {
         NavHost(navController, startDestination = ScreenRouteFeed) {
             composable<ScreenRouteFeed> {
                 FeedScreen(topBarViewModel, navController)

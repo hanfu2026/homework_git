@@ -16,8 +16,12 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+        multiDexEnabled = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+//        testApplicationId = "com.sample.git.sample"
+//        testInstrumentationRunner = "com.sample.git.sample.cucumber.CucumberJunitRunner"
     }
 
     buildTypes {
@@ -62,9 +66,17 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.logging.interceptor)
     implementation(libs.chunker)
+    implementation(libs.core.ktx)
 
+    androidTestImplementation(libs.navigation.testing)
     testImplementation(libs.square.mockwebserver)
     testImplementation(libs.mockito.kotlin)
+    androidTestImplementation(libs.cucumber.android)
+    androidTestImplementation(libs.cucumber.picocontainer)
+    implementation(libs.poi.ooxml)
+    implementation(libs.xmlbeans)
+    androidTestImplementation(libs.stax.api)
+    androidTestImplementation(libs.aalto.xml)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

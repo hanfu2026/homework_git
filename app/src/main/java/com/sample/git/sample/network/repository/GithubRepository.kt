@@ -69,15 +69,11 @@ class GithubRepository {
     suspend fun getAuthenticatedRepoIssues(authToken: String,
                              owner: String,
                              repo: String): Response<List<RepoIssueModel>> {
-//        return githubService.getAuthenticatedRepoIssues(authToken = "Bearer $authToken",
-//            owner = owner,
-//            repo = repo
-//        )
-        val ret = githubService.getIssues(token = "Bearer $authToken",
+        return githubService.getIssues(
+            token = "Bearer $authToken",
             owner = owner,
-            repo = repo,
+            repo = repo
         )
-        return ret
     }
 
     suspend fun createIssue(token: String,

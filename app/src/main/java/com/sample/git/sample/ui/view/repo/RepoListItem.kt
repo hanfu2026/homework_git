@@ -36,7 +36,7 @@ fun RepoListItem(param: RepoListItemParam) {
 
     Card(modifier = Modifier.defaultMinSize(minHeight = 48.dp)
         .fillMaxWidth()
-        .padding(horizontal = 8.dp)
+        .padding(horizontal = 16.dp)
         .clickable {
             param.onClick(param.name)
         }.semantics(true) {

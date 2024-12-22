@@ -1,17 +1,15 @@
 package com.sample.git.sample.ui.screen
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,7 +19,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.sample.git.sample.ui.view.IssueListView
+import com.sample.git.sample.ui.view.IssueListItemParam
+import com.sample.git.sample.ui.view.IssueListItemView
 import com.sample.git.sample.ui.view.LogoutView
 import com.sample.git.sample.ui.view.repo.RepoTitleView
 import com.sample.git.sample.viewmodel.LoginVM
@@ -41,7 +40,6 @@ fun OwnerRepoDetailScreen(owner: String,
     val oAuthState by loginViewModel.oAuthState.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
-    val scrollState = rememberScrollState()
     topBarViewModel.setTitle(repoName)
 
     viewModel.fetchRepoInfo(accessToken = oAuthState.accessToken
@@ -59,34 +57,73 @@ fun OwnerRepoDetailScreen(owner: String,
     )
 
 
-    Column(modifier = Modifier.fillMaxSize().verticalScroll(scrollState)) {
-        repoInfo?.let { RepoTitleView(it) }
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
+        item {
+            repoInfo?.let { RepoTitleView(it) }
+        }
+        if (issues.isNotEmpty()) {
+            item {
+                Spacer(Modifier.height(16.dp))
+                Text("Issues:"
+                    , modifier = Modifier.padding(horizontal = 16.dp)
+                    , style = MaterialTheme.typography.titleMedium
+                )
+                Spacer(Modifier.height(16.dp))
+            }
+            items(issues.size) { index ->
+                val issue = issues[index]
+                if (issue != null) {
+                    IssueListItemView(IssueListItemParam(
+                        index = index,
+                        size = issues.size,
+                        title = issue.title,
+                        body = issue.body,
+                        onClick = { }
+                    ))
+                    Spacer(Modifier.height(8.dp))
+                }
+            }
+        }
 
-        IssueListView(issues, onIssueItemClicked = {})
-
-        Spacer(Modifier.height(24.dp))
+        item {
+            Spacer(Modifier.height(24.dp))
+        }
         // create issue
-        BtnCreateIssue(onCreateIssue = {
-            viewModel.createIssue(accessToken = oAuthState.accessToken,
-                owner = owner,
-                repoName = repoName,
-                title = "New issue",
-                body = "This issue was created by app",
-                onSuccess = {
-                    informUser(context, "Issue created successfully.")
-                },
-                onErrMsg = { err ->
-                    informUser(context, err)
-                })
-        })
-        Spacer(Modifier.height(24.dp))
-        LogoutView(loginViewModel, context, navController)
+        item {
+            BtnCreateIssue(onCreateIssue = {
+                viewModel.createIssue(accessToken = oAuthState.accessToken,
+                    owner = owner,
+                    repoName = repoName,
+                    title = "New issue",
+                    body = "This issue was created by app",
+                    onSuccess = {
+                        informUser(context, "Issue created successfully.")
+                        viewModel.fetchIssues(
+                            accessToken = oAuthState.accessToken,
+                            owner = owner,
+                            repoName = repoName,
+                            onSuccess = {},
+                            onErrMsg = {}
+                        )
+                    },
+                    onErrMsg = { err ->
+                        informUser(context, err)
+                    })
+            })
+        }
+        item {
+            Spacer(Modifier.height(24.dp))
+            LogoutView(loginViewModel, context, navController)
+            Spacer(Modifier.height(24.dp))
+        }
     }
 }
 
 @Composable
 private fun BtnCreateIssue(onCreateIssue: () -> Unit) {
-    Button(modifier = Modifier.fillMaxWidth().padding(16.dp), onClick = {
+    Button(modifier = Modifier
+        .fillMaxWidth()
+        .padding(16.dp), onClick = {
         onCreateIssue()
     }) {
         Text("Create an issue")

@@ -33,7 +33,7 @@ data class User(@SerializedName("gists_url")
                 @SerializedName("site_admin")
                 val siteAdmin: Boolean = false,
                 @SerializedName("id")
-                val id: Int = 0,
+                val id: Long = 0,
                 @SerializedName("gravatar_id")
                 val gravatarId: String = "",
                 @SerializedName("node_id")

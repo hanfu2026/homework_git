@@ -17,6 +17,12 @@ loggingInterceptor = "5.0.0-alpha.11"
 chucker = "4.0.0"
 mockWebServer = "4.11.0"
 mokitoKotlin = "2.2.0"
+cucumberAndroid = "7.14.0"
+poiOoxml = "3.17"
+xmlbeans = "5.1.0"
+staxApi = "1.0"
+aaltoXml = "1.2.2"
+coreKtxVersion = "1.6.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -47,6 +53,14 @@ chunker = { group = "com.github.chuckerteam.chucker", name = "library", version.
 
 square-mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "mockWebServer" }
 mockito-kotlin = { group = "com.nhaarman.mockitokotlin2", name = "mockito-kotlin", version.ref = "mokitoKotlin" }
+cucumber-android = { group = "io.cucumber", name = "cucumber-android", version.ref = "cucumberAndroid" }
+cucumber-picocontainer = { group = "io.cucumber", name = "cucumber-picocontainer", version.ref = "cucumberAndroid" }
+poi-ooxml = { module = "org.apache.poi:poi-ooxml", version.ref = "poiOoxml" }
+xmlbeans = { module = "org.apache.xmlbeans:xmlbeans", version.ref = "xmlbeans" }
+stax-api = { module = "javax.xml.stream:stax-api", version.ref = "staxApi" }
+aalto-xml = { module = "com.fasterxml:aalto-xml", version.ref = "aaltoXml" }
+core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtxVersion" }
+navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref="navCompose"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
