@@ -10,11 +10,16 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
 import com.sample.git.sample.navigation.navToRepoDetail
@@ -47,10 +52,10 @@ fun FeedWebView(url: String, navController: NavHostController){
                     backEnabled = view?.canGoBack() == true
                 }
 
-//                override fun onPageFinished(view: WebView?, url: String?) {
-//                    super.onPageFinished(view, url)
-//                    view?.loadUrl("javascript:(function() { document.getElementsById('AppHeader').style.display='none';})()")
-//                }
+                override fun onPageFinished(view: WebView?, url: String?) {
+                    super.onPageFinished(view, url)
+                    view?.loadUrl("javascript:(function() { document.getElementsById('AppHeader').style.display='none';})()")
+                }
 
                 @Deprecated("Deprecated in Java")
                 override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
@@ -93,5 +98,52 @@ fun FeedWebView(url: String, navController: NavHostController){
 
     BackHandler(enabled = backEnabled) {
         webView?.goBack()
+    }
+
+    @Composable
+    fun AlertDialogExample(
+        onDismissRequest: () -> Unit,
+        onConfirmation: () -> Unit,
+        dialogTitle: String,
+        dialogText: String,
+        icon: ImageVector,
+    ) {
+        val openAlertDialog = remember { mutableStateOf(false) }
+
+        AlertDialog(
+            icon = {
+                Icon(icon, contentDescription = "Example Icon")
+            },
+            title = {
+                Text(text = dialogTitle)
+            },
+            text = {
+                Text(text = dialogText)
+            },
+            onDismissRequest = {
+                openAlertDialog.value = false
+                onDismissRequest()
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        openAlertDialog.value = false
+                        onConfirmation()
+                    }
+                ) {
+                    Text("Confirm")
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        openAlertDialog.value = false
+                        onDismissRequest()
+                    }
+                ) {
+                    Text("Dismiss")
+                }
+            }
+        )
     }
 }

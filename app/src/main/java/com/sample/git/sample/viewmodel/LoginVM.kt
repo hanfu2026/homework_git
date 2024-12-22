@@ -62,6 +62,7 @@ class LoginVM: ViewModel() {
 
     fun clearVMToken() {
         _oAuthState.update { it.copy(code = "", accessToken = "")}
+        _loginStatus.update {LoginStatus.LOGOUT}
     }
 
     fun getLoading(): Boolean {
